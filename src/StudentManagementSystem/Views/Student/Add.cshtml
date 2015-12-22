@@ -1,0 +1,36 @@
+﻿@using StudentManagementSystem.Models
+@model Student
+
+<div id="message" class="text-danger">@ViewData["divMessage"]</div>
+<form asp-action="Add" asp-antiforgery="true" asp-controller="Student">
+    <div asp-validation-summary="ValidationSummary.All"></div>
+
+    <div class="form-group">
+        <label asp-for="FullName"></label>
+        <input type="text" asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DateOfBirth"></label>
+        <input type="date" asp-for="DateOfBirth" class="form-control" />
+        <span asp-validation-for="DateOfBirth"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input type="email" asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="MobileContact"></label>
+        <input type="text" asp-for="MobileContact" class="form-control" />
+        <span asp-validation-for="MobileContact"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CourseId"></label>
+        <select asp-for="CourseId" asp-items="@(new SelectList((List<Course>)ViewData["courses"], "CourseId", "CourseName"))" class="form-control">
+            <option value="0">Select a course</option>
+        </select>
+        <span asp-validation-for="CourseId"></span>
+    </div>
+    <button class="btn btn-success">Submit</button>
+</form>

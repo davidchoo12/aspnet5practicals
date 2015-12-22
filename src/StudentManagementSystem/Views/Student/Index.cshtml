@@ -1,0 +1,60 @@
+﻿@using StudentManagementSystem.ViewModels.Student
+@model List<StudentViewModel>
+@{
+    ViewData["Title"] = "Student Page";
+}
+
+<div class="content">
+    <div id="divMessage" class="text-danger">@ViewData["divMessage"]</div>
+    <a asp-controller="Student" asp-action="Add" class="btn btn-primary">Add Student</a>
+    <form class="form-inline" asp-controller="Student" asp-action="Index" method="post">
+        <div class="form-group">
+            <label for="search">Search:</label>
+            <input id="search" name="search" class="form-control" type="text" placeholder="Search" />
+            <button class="btn btn-default" type="submit">Search</button>
+        </div>
+    </form>
+    <form id="delete" asp-action="Delete" method="post">
+        <table id="students" class="table">
+            <caption>Students</caption>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>@Html.DisplayNameFor(x => x[0].FullName)</th>
+                    <th>@Html.DisplayNameFor(x => x[0].Email)</th>
+                    <th>@Html.DisplayNameFor(x => x[0].MobileContact)</th>
+                    <th>@Html.DisplayNameFor(x => x[0].DateOfBirth)</th>
+                    <th>@Html.DisplayNameFor(x => x[0].CourseAbbreviation)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (StudentViewModel student in Model)
+            {
+                    <tr>
+                        <td><input type="checkbox" name="checkedId" value="@student.StudentId" form="delete" /></td>
+                        <td>@student.FullName</td>
+                        <td>@student.Email</td>
+                        <td>@student.MobileContact</td>
+                        <td>@student.DateOfBirth.ToString("dd-MMM-yyyy")</td>
+                        <td>@student.CourseAbbreviation</td>
+                        <td><a asp-controller="Student" asp-action="Edit" asp-route-id="@student.StudentId" class="btn btn-default btn-sm">Edit</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+</div>
+
+@section scripts {
+    <script>
+        $("#students > tbody > tr").each(function (i) {
+            var dob = this.cells[3].innerHTML;
+            var year = +dob.split("-")[2];
+            console.log(year);
+            if (year == 1999)
+                $(this).addClass("highlight");
+        });
+    </script>
+}
